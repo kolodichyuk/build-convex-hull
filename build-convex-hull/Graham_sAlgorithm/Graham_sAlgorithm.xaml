@@ -1,0 +1,40 @@
+﻿<Page x:Class="ConvexHull.Graham_sA.Graham_sAlgorithm"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ConvexHull="clr-namespace:ConvexHull"
+      mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#111723" PreviewMouseDown="GridMouseDown">
+        <StackPanel x:Name="initialMessage" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Content="You have chosen Graham's algorithm" Foreground="#2a3956" FontSize="25"/>
+            <Label Content="Please put point to start" Foreground="#2a3956" HorizontalAlignment="Center" FontSize="25"/>
+        </StackPanel>
+        <Grid x:Name="workSpace" Visibility="Hidden">
+            <ItemsControl Name="ItemsControl" Background="#111723" PreviewMouseDown="CreatePoint" ItemsSource="{Binding Points}">
+                <ItemsControl.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{x:Static ConvexHull:ViewModel.CreateConvexHull}"/>
+                </ItemsControl.InputBindings>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas></Canvas>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Ellipse Fill="#2a3956" Width="20" Height="20"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Top" Value="{Binding Path=Y}" />
+                        <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+            <Polygon Stroke="#2a3956" StrokeThickness="4" StrokeLineJoin="Round" Points="{Binding Path=HullPoints}" Fill="Red" Opacity="0.2"/>
+            <Button Command="{x:Static ConvexHull:ViewModel.ClearPoints}" Content="Clear" Width="150" Height="50" Background="#0066CC"
+                    Margin="0 0 30 30" FontSize="18" VerticalAlignment="Bottom" HorizontalAlignment="Right" PreviewMouseUp="Clear"/>
+        </Grid>
+    </Grid>
+</Page>
